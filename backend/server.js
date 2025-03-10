@@ -40,7 +40,7 @@ app.use(express.json());  //get JSON data
 //app.use(cors());
 
 app.use(cors({
-    origin: 'http://localhost:7002',  // React app URL
+    origin: ['http://localhost:7002', 'http://localhost:7001'],  // React app URL
     credentials: true                // Enable cookies if needed
   }));
 

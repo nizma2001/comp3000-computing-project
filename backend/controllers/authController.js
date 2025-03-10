@@ -4,8 +4,13 @@ const User = require("../models/userModel"); //import userSchema
 
 //NEW USER LOGIC
 
+
+
+
 const register = async (req, res) => {
     try {
+
+        console.log("Register route hit! Request body:", req.body); //debug
         const {username, password, role} = req.body;
 
         //validate the input
@@ -46,6 +51,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     try {
        
+        console.log("Login route hit!")
         const {username, password} = req.body;
 
         //validate the input
