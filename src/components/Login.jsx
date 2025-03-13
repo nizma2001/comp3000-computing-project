@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
 import axios from "../API/axios";
 
@@ -7,7 +8,8 @@ const URL = 'http://localhost:7001/api/auth/login';
 
 const Login = () => {
     const { setAuthState } = useContext(AuthContext); //store authstate in global context upon successful login by user
-   
+    const navigate = useNavigate();
+
     const userRef = useRef();
     const errorRef = useRef();
 
@@ -49,6 +51,15 @@ const Login = () => {
             setUser('');
             setPwd('');
             setSuccess(true);
+
+            //redirect based on user role
+
+           
+            if (roles === "admin") {
+                navigate("/upload");
+            } else if (roles === "user") {
+                navigate("/userdashboard");
+            }
 
         } catch (err) {
             if (!err?.response) {
