@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\Users\\nizma\\OneDrive\\Desktop\\comp3000-computing-project\\contracts\\StoreHash.sol": {
-      "lastModificationDate": 1744031571469,
-      "contentHash": "9d20f7614676972bb1a9264412a8c6c8",
+      "lastModificationDate": 1744743893855,
+      "contentHash": "78076791c71b950b7564da7971303fdf",
       "sourceName": "contracts/StoreHash.sol",
       "solcConfig": {
         "version": "0.7.3",

@@ -5,7 +5,7 @@ async function main () {
 
     const storeHash = await ethers.getContractFactory("storeHash")
 
-    const store_Hash = await storeHash.deploy("Hello World!");
+    const store_Hash = await storeHash.deploy();
     console.log("Contract deployed to address: ", store_Hash.address)
 
 }

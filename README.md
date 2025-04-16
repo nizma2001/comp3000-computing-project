@@ -1,6 +1,14 @@
 # File Integrity Verification Using Blockchain Technology
 
-# Product Features
+## Project Vision
+
+
+
+## YouTube Demo Link
+
+- Paste link here
+
+## Product Features
 
 - Role-Based access control for users & admin
 - Upload, Search & Download files stored in the system
@@ -8,7 +16,7 @@
 - File encryption in-transit & at rest
 - File integrity checks via hash verification
 
-# Tools & Technology 
+## Tools & Technology 
 
 - AWS S3 for cloud storage
 - Hardhat – Developing & deploying smart contract
