@@ -42,6 +42,7 @@ const handleDelete = async (fileKey) => {
         await axios.delete(`http://localhost:7001/api/files/delete/${fileKey}`);
         console.log("code reached");
         setFiles(files.filter(file => file.fileKey !== fileKey)); //remove file from the table
+        
     } catch (error) {
         console.error("Delete failed:", error);
     }
