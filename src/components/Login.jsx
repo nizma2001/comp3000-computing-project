@@ -2,7 +2,7 @@ import { useRef, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
 import axios from "../API/axios";
-
+import "../CSS/table-styling.css";
 
 const URL = 'http://localhost:7001/api/auth/login';
 
@@ -78,47 +78,76 @@ const Login = () => {
     return (
         <>
       
-            <p ref={errorRef} className={errorMsg ? "errormsg" :
-                "offscreen"} aria-live="assertive">{errorMsg} </p>
-            
-            <h1>Sign In</h1>
-            <form onSubmit={verifyLogin}>
-                <label htmlFor="username"> Username:</label>
-                <input
+      <div className="container mt-5">
+      <p ref={errorRef} className={errorMsg ? "errormsg" : "offscreen"} aria-live="assertive">
+        {errorMsg}
+      </p>
+
+      <div className="login-box d-flex shadow-lg rounded overflow-hidden">
+        {/* Left Form Section */}
+        <div className="col-md-6 p-5 bg-white">
+          <h4 className="mb-4 fw-bold">Sign In</h4>
+
+          <div className="mb-3 d-flex gap-2">
+            <button className="btn social-btn"><i className="fab fa-facebook-f"></i></button>
+            <button className="btn social-btn"><i className="fab fa-twitter"></i></button>
+          </div>
+
+          <form onSubmit={verifyLogin}>
+            <div className="mb-3">
+              <label className="form-label small text-uppercase fw-bold">Username</label>
+              <input
                 type="text"
                 id="username"
+                className="form-control rounded-pill bg-light border-0 px-4"
                 ref={userRef}
                 autoComplete="off"
-                onChange={(e) => setUser(e.target.value)}
                 value={user}
+                onChange={(e) => setUser(e.target.value)}
                 required
-                />
+              />
+            </div>
 
-                <label htmlFor="password"> Password:</label>
-                <input
+            <div className="mb-3">
+              <label className="form-label small text-uppercase fw-bold">Password</label>
+              <input
                 type="password"
                 id="password"
-                onChange={(e) => setPwd(e.target.value)}
+                className="form-control rounded-pill bg-light border-0 px-4"
                 value={pwd}
+                onChange={(e) => setPwd(e.target.value)}
                 required
-                />
+              />
+            </div>
 
-                <button> Sign In</button>
-            </form>
-            <p>
-                Forgot Password <br/>
-                <span className="line">
-                    {/*redirect page later*/}
-                    <a href="#">Click here</a>
-                </span>
-            </p>
+            <div className="d-grid mb-3">
+              <button type="submit" className="btn btn-gradient rounded-pill py-2 fw-semibold text-white">
+                Sign In
+              </button>
+            </div>
 
+            <div className="d-flex justify-content-between align-items-center small">
+              <div className="form-check">
+                <input type="checkbox" className="form-check-input" id="rememberMe" defaultChecked />
+                <label className="form-check-label text-pink" htmlFor="rememberMe">Remember Me</label>
+              </div>
+              <a href="#" className="text-muted">Forgot Password</a>
+            </div>
+          </form>
+        </div>
+
+        {/* Right Info Section */}
+        <div className="col-md-6 d-flex flex-column justify-content-center align-items-center text-white bg-gradient-custom p-5">
+          <h3 className="fw-bold">Welcome to login</h3>
+          <p>Don't have an account?</p>
+          <button className="btn btn-outline-light rounded-pill px-4 mt-2">Sign Up</button>
+        </div>
+      </div>
+    </div>
+</>
         
-     
-        
-    
-        </>
     )
 }
 
 export default Login
+

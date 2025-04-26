@@ -36,6 +36,7 @@ const UploadFile = () => {
             // read file and calculate file hash
             const buffer = await file.arrayBuffer();
             const fileUint8 = new Uint8Array(buffer);
+            console.log("Upload file size:", fileUint8.length);
             const hashHex = sha256(fileUint8); // SHA-256 hex string
             const hashBytes32 = "0x" + hashHex; // Convert to bytes32 format
 

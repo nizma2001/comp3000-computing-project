@@ -1,6 +1,6 @@
 const express = require('express');
 const AWS = require('aws-sdk');
-
+const axios = require('axios');
 const router = express.Router();
 
 // Configure AWS SDK
@@ -26,7 +26,7 @@ router.post('/presigned-url', (req, res) => {  //pre-signed url to POST file to 
     const params = {
         Bucket: process.env.AWS_S3_BUCKET,
         Key: fileName,
-        Expires: 120, // URL expiry limit - 120 seconds..
+        Expires: 120, // setting a timelimit for the url
         ContentType: fileType,
     };
 
@@ -102,27 +102,33 @@ router.delete('/delete/:filename', (req, res) => {
 
   //function to download using pre-signed url
 
-  router.get('/download/:filename', (req, res) => {
+  router.get('/download/:filename', async (req, res) => {
     const fileName = req.params.filename;
-  
-    console.log("Downloading file:", fileName);  // Debug step
-  
+
     const params = {
-      Bucket: 'your-bucket-name', // Replace with your S3 bucket name
-      Key: fileName,
-      Expires: 60 // URL will expire in 60 seconds (can adjust as needed)
+        Bucket: process.env.AWS_S3_BUCKET,
+        Key: fileName,
+        Expires: 60
     };
-  
-    // Generate a pre-signed URL for downloading the file
-    s3.getSignedUrl('getObject', params, (err, url) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).send('Error generating pre-signed URL');
-      }
-      
-      // Send the pre-signed URL as the response
-      res.json({ url });
-    });
+
+    try {
+        // Generate pre-signed URL
+        const presignedUrl = s3.getSignedUrl('getObject', params);
+
+        // Fetch file using axios (S3 allows this since it's server-side)
+        const fileResponse = await axios.get(presignedUrl, { responseType: 'stream' });
+
+        // Set headers
+        res.setHeader('Content-Type', fileResponse.headers['content-type']);
+        res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+
+        // Pipe the file to the response
+        fileResponse.data.pipe(res);
+
+    } catch (err) {
+        console.error('Error downloading file:', err.message);
+        res.status(500).send('Error downloading file');
+    }
 });
   
 module.exports = router; 

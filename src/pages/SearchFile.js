@@ -2,6 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import AuthContext from "../context/AuthProvider";
 import '../CSS/table-styling.css';
+import { sha256 } from "js-sha256";
+import { ethers } from "ethers";
+import contractABI from '../abi/storeHash.json';
+const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+const contract = new ethers.Contract(contractAddress, contractABI.abi, provider);
 
 const SearchFile = () => {
 
@@ -51,24 +57,42 @@ const handleDelete = async (fileKey) => {
 //function to download file
 
 const handleDownload = async (fileKey) => {
-    console.log("Attempting to download file with key:", fileKey); //debug
     try {
         const response = await axios.get(`http://localhost:7001/api/files/download/${fileKey}`, {
-            responseType: 'blob', // 
+            responseType: 'blob'
         });
-        
-        // Create a URL and trigger download
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", fileKey);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+
+        const fileBlob = response.data;
+        const arrayBuffer = await fileBlob.arrayBuffer();
+        const fileUint8 = new Uint8Array(arrayBuffer);
+
+        const hashHex = sha256(fileUint8);
+        const computedHash = "0x" + hashHex;
+        console.log("Downloaded file hash is:", computedHash); //debug step
+
+        const storedHash = await contract.getHash(fileKey);
+        console.log("Blockchain stored hash is:", storedHash); //debug step
+
+        if (computedHash === storedHash) {
+            const url = window.URL.createObjectURL(fileBlob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", fileKey);
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            alert("✅ Hash matched! File integrity verified.");
+        } else {
+            alert("❌ Hash mismatch! File may have been tampered with.");
+        }
+
     } catch (error) {
         console.error("Download failed:", error);
+        alert("Failed to download file.");
     }
 };
+
+
 
 return (
     <div className="file-container">
