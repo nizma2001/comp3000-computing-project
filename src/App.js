@@ -14,33 +14,36 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
-  <BrowserRouter>
-    <Routes>
 
-      <Route path="/" element={<Layout/>}>
-       <Route index element={<Login/>} />
+    <BrowserRouter>
+      <Routes>
 
-        {/* Protected routes for both admin & user */}
+        {/* Login route without Layout */}
+        <Route path="/" element={<Login />} />
 
-        <Route element={<ProtectedRoute allowedRoles={['admin', 'user']} />}>
-          <Route path="search" element={<SearchFile />} />
+        {/* Routes that use Layout (navbar) */}
+        <Route path="/" element={<Layout />}>
+          
+          {/* protected routes for both admin & user */}
+          <Route element={<ProtectedRoute allowedRoles={['admin', 'user']} />}>
+            <Route path="search" element={<SearchFile />} />
+          </Route>
+
+          {/* rotected routes for user only */}
+          <Route element={<ProtectedRoute allowedRoles={['user']} />}>
+            <Route path="userdashboard" element={<UserPage />} />
+          </Route>
+
+          {/* protected routes for admin only */}
+          <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+            <Route path="upload" element={<UploadFile />} />
+          </Route>
+
         </Route>
 
-        {/* Protected routes for user only */}
+      </Routes>
+    </BrowserRouter>
 
-        <Route element={<ProtectedRoute allowedRoles={['user']} />}>
-         <Route path="userdashboard" element={<UserPage />} />
-        </Route>
-
-        {/* Protected routes for admin only */}
-
-        <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
-           <Route path="upload" element={<UploadFile />} />
-        </Route>
-
-      </Route>
-    </Routes>
-  </BrowserRouter>
 
   );
 }

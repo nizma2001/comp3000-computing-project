@@ -70,7 +70,9 @@ const UploadFile = () => {
             await tnx.wait();
             console.log("Hash stored on blockchain!");
     
-            setMessage("File uploaded and hash stored on blockchain!"); //debug step
+            
+            setMessage("File uploaded and hash stored on blockchain!");
+         //debug step
 
         } catch (error) {
             console.error("Upload error:", error);
@@ -81,14 +83,39 @@ const UploadFile = () => {
     };
 
     return (
-        <div>
-            <h2>Upload File to S3</h2>
-            <input type="file" onChange={handleFileChange} />
-            <button onClick={handleUpload} disabled={uploading}>
-                {uploading ? "Uploading..." : "Upload"}
-            </button>
-            {message && <p>{message}</p>}
+        <div className="container mt-5 d-flex justify-content-center">
+    <div className="card p-4 shadow" style={{ width: "30rem" }}>
+      <h2 className="text-center mb-4">Upload File</h2>
+      <div className="mb-3">
+        <input 
+          type="file" 
+          className="form-control" 
+          onChange={handleFileChange} 
+        />
+      </div>
+      <div className="d-grid gap-2">
+        <button 
+          onClick={handleUpload} 
+          className="btn btn-primary" 
+          disabled={uploading}
+        >
+          {uploading ? (
+            <>
+              <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              {" "}Uploading...
+            </>
+          ) : (
+            "Upload"
+          )}
+        </button>
+      </div>
+      {message && (
+        <div className={`alert mt-3 ${message.includes("success") ? "alert-success" : "alert-info"}`} role="alert">
+          {message}
         </div>
+      )}
+    </div>
+  </div>
     );
 };
 

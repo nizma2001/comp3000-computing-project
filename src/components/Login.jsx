@@ -58,7 +58,7 @@ const Login = () => {
             if (roles === "admin") {
                 navigate("/upload");
             } else if (roles === "user") {
-                navigate("/userdashboard");
+                navigate("/search");
             }
 
         } catch (err) {
@@ -138,9 +138,9 @@ const Login = () => {
 
         {/* Right Info Section */}
         <div className="col-md-6 d-flex flex-column justify-content-center align-items-center text-white bg-gradient-custom p-5">
-          <h3 className="fw-bold">Welcome to login</h3>
-          <p>Don't have an account?</p>
-          <button className="btn btn-outline-light rounded-pill px-4 mt-2">Sign Up</button>
+          <h3 className="fw-bold">Welcome User!</h3>
+          <p>New User?</p>
+          <button className="btn btn-outline-light rounded-pill px-4 mt-2">Sign Up Here</button>
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import { AuthProvider} from './context/AuthProvider';
 import reportWebVitals from './reportWebVitals';

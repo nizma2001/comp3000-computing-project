@@ -28,7 +28,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "mocha",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -52,6 +52,7 @@
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.2.3",
     "ethers": "^5.8.0",
-    "hardhat": "^2.22.19"
+    "hardhat": "^2.22.19",
+    "mocha": "^11.1.0"
   }
 }
